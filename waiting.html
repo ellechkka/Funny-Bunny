@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/rabbit.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kablammo&family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <title>Funny Bunny: wait to play</title>
+    <style>
+        .contain {
+            display: flex;
+            justify-content: center;
+        }
+        img {
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="contain">
+        <div>
+            <div class="heading_contain">
+                <h1 class="plain_text small_heading">Игра еще не началась, подождите</h1>
+            </div>
+            <div class="wait_image">
+                <img src="images/waiting1.jpg">
+            </div>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('load', () => {
+            results = document.cookie.match(/roomId=(.+?)(;|$)/);
+            let id = results[1];
+
+            setInterval(function() {
+                $.ajax({
+                    method: "POST",
+                    url: 'scripts/waiting.php',
+                    data: {
+                        id: id,
+                    },
+                    success: function(response) {
+                        // alert(response);
+                        let jsonData = JSON.parse(response);
+             
+                        if (response == "1") {
+                            location.href = 'field.html';
+                        }
+                    }
+                });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

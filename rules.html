@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/rabbit.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kablammo&family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Funny Bunny: Rules</title>
+    <style>
+        .contain {
+            display: grid;
+            grid-template-columns: 1fr 7fr;
+        }
+        .rules_heading {
+            display: inline;
+            font-size: 60px;
+            margin-top: 0;
+            margin-bottom: 32px;
+        }
+        .rules {
+            margin-left: 24px;
+        }
+        .pair {
+            margin-bottom: 20px;
+        }
+        .b {
+            position: absolute;
+            bottom: 2vh;
+            left: 2vw; 
+        }
+    </style>
+</head>
+<body>
+    <div class="contain">
+        <form id="back_button" class="b" action="index.html">
+            <button class="plain_text small_heading">Назад</button>
+        </form>
+        <div></div>
+        <div class="rules">
+            <h1 class="heading rules_heading">Funny Bunny</h1>
+            <!-- <span class="plain_text small_heading">Правила</span> -->
+            <div class="pair">
+                <h2 class="plain_text small_heading">В начале игры</h2>
+                <p class="plain_text small_text">Перед началом игры все зайчики находятся перед первой ячейкой.</p>
+            </div>
+            <div class="pair">
+                <h2 class="plain_text small_heading">Цель игры</h2>
+                <p class="plain_text small_text">Быть первым игроком, который доведет одного из своих кроликов до вершины с морковкой.</p>
+            </div>
+            <div class="pair">
+                <h2 class="plain_text small_heading">Процесс игры</h2>
+                <p class="plain_text small_text">Ход игрока определяется порядком, присвоенным при входе в игровую комнату, и заключается в том, что он берет карту из колоды. Если на карте изображен прыгающий зайчик, игрок выбирает одного из своих кроликов, чтобы сделать ход.</p>
+            </div>
+            <div class="pair">
+                <h2 class="plain_text small_heading">Когда вращается морковка</h2>
+                <p class="plain_text small_text">Когда выпадает карту с нарисованной на ней морковкой, поворачивается морковка. Одна из ям на пути может открыться.</p>
+                <p class="plain_text small_text">Если на этом месте находится кролик, то он упадёт в яму. Этот кролик выбывает из игры.</p>
+                <p class="plain_text small_text">Если все четыре кролика игрока упадут в ямы, он проигрывает.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/rabbit.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kablammo&family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/games_list_style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <title>Funny Bunny: Choose a game</title>
+    
+</head>
+<body>
+    <div class="contain">
+        <div class="heading_contain">
+            <h1 class="plain_text small_heading">Выбор игры</h1>
+        </div>
+        <!-- <div class="refresh_button">
+            <button class="plain_text small_heading" onclick="showrooms()">Обновить список комнат</button>
+        </div> -->
+        <div class="games_container">
+            <div id="a_games">
+                <span id='heading1' class="plain_text small_text">Вернуться в игру</span>
+                <div class="titles">
+                    <span class="plain_text small_text">id комнаты</span>
+                    <span class="plain_text small_text">время</span>
+                    <span class="plain_text small_text">кол-во игроков</span>
+                </div>
+                <div class="list_of_games" id="list_of_games2"></div>
+            </div>
+            <span class="plain_text small_text">Войти в новую игру</span>
+            <div class="titles">
+                <span class="plain_text small_text">id комнаты</span>
+                <span class="plain_text small_text">время</span>
+                <span class="plain_text small_text">кол-во игроков</span>
+            </div>
+
+            <div class="list_of_games" id="list_of_games"></div>
+            <!-- <div class="list_of_games2">
+             
+                <div class="game">
+                    <div>
+                        <span class="plain_text small_text" id="game_id">834772</span>
+                    </div>
+                    <div>
+                        <span class="plain_text small_text" id="time">40</span>
+                        <span class="plain_text small_text"> сек</span>
+                    </div>
+                    <div>
+                        <span class="plain_text small_text" id="number">1</span>
+                        <span class="plain_text small_text">/</span>
+                        <span class="plain_text small_text" id="out_of_people">4</span>
+                    </div>
+                </div>
+                
+            </div> -->
+        </div>
+        <div id="button_block" class="button_block">
+            <button onclick="create_game()" class="plain_text small_heading">Создать игру</button>
+            <button onclick="refresh()" class="plain_text small_heading">Обновить список</button>
+        </div>
+        
+        <!-- <div class="single_button">
+            <form action="">
+                <button class="plain_text small_heading">Создать игру</button>
+            </form> 
+        </div> -->
+      
+        <dialog id="error">
+            <div>
+                <p class="plain_text small_text" id="error_text"></p>
+                <button class="plain_text small_heading" onclick="window.error.close();">ОК</button>
+            </div>                
+        </dialog>
+
+        <dialog id="create_game_window">
+            <div>
+                <h2 class="plain_text small_heading">Создание игры</h2>
+                <form id="form_create">
+                    <div>
+                        <label class="plain_text small_text" for="number_of_people">Количество игроков</label><br>
+                        <!-- <input type="number" value="2" id="number_of_people" name="number" min="2" max="4"/> -->
+                        <input type="number" value="4" id="number_of_people" name="number"/>
+                    </div>
+                    <div>
+                        <label class="plain_text small_text" for="time_on_move">Время на ход</label><br>
+                        <!-- <input type="number" value="60" id="time" name="time" min="1" max="300"/> -->
+                        <input type="number" value="30" id="time_on_move" name="time"/>
+                    </div>
+                    <button class="plain_text small_heading" onclick="create_game()" type="submit">Создать</button>
+                </form>
+                <button class="plain_text small_heading" onclick="dont_create()">Отмена</button>
+            </div>
+        </dialog>
+    </div>
+    <script>
+        let games_arr = [];
+
+        window.addEventListener('load', () => {
+            refresh();
+            // a_games_update();
+            // showrooms();
+        });
+
+        function refresh() {
+            showrooms(); 
+            a_games_update();
+        }
+
+        function a_games_update() {
+            let results = document.cookie.match(/login=(.+?)(;|$)/);
+            let login = results[1];
+
+            $.ajax({
+                    method: "POST",
+                    url: 'scripts/rejoingame.php',
+                    data: {
+                        login: login,
+                    },
+                    success: function(response) {
+                        let jsonData = JSON.parse(response);
+                        if (jsonData.rooms_cnt > 0) {
+                            // сделать заголовок видимым
+                            document.getElementById('a_games').style.display='block';
+
+                            // вывести как в showrooms
+                            let parent = document.getElementById("list_of_games2");
+                            parent.innerHTML = '';     
+                            for (i = 0; i < jsonData.rooms_cnt; i++) {
+                                games_arr.push(jsonData["" + (i * 4)]);
+
+                                let el = document.createElement('div');
+                                el.className = "game";
+                                el.setAttribute('id', jsonData["" + (i * 4)]);
+                                el.onclick = function () {
+                                    const id = el.getAttribute('id');
+                                    return_to_room(id);
+                                }                                
+
+                                let s1  = document.createElement('span');
+                                s1.className = "plain_text small_text";
+                                s1.setAttribute('id', 'game_id');
+                                s1.textContent = jsonData["" + (i * 4)];
+
+                                let s2  = document.createElement('span');
+                                s2.className = "plain_text small_text";
+                                s2.setAttribute('id', 'time');
+                                s2.textContent = jsonData["" + (i * 4 + 1)];
+
+                                let s3 = document.createElement('span');
+                                s3.className = "plain_text small_text";
+                                s3.setAttribute('id', 'number');
+                                s3.textContent = jsonData["" + (i * 4 + 2)] + "/" + jsonData["" + (i * 4 + 3)];
+
+                                el.appendChild(s1);
+                                el.appendChild(s2);
+                                el.appendChild(s3);
+
+                                parent.appendChild(el);
+                            }
+                        }
+                        
+                    }
+                });
+        }
+        function showrooms() {
+            $.ajax({
+                method: "POST",
+                url: 'scripts/showrooms.php',
+                data: {},
+                success: function(response) {
+                    let jsonData = JSON.parse(response);
+                    if (jsonData.success == "1") { 
+                        let parent = document.getElementById("list_of_games");
+                        parent.innerHTML = '';                           
+                        for (i = 0; i < jsonData.rooms_cnt; i++) {
+                            // let parent = document.getElementById("list_of_games");
+
+                            if (!(games_arr.includes(jsonData["" + (i * 4)]))) {
+                                let el = document.createElement('div');
+                                el.className = "game";
+                                el.setAttribute('id', jsonData["" + (i * 4)]);
+                                el.onclick = function () {
+                                    const id = el.getAttribute('id');
+                                    roomenter(id);
+                                }                                
+
+                                let s1  = document.createElement('span');
+                                s1.className = "plain_text small_text";
+                                s1.setAttribute('id', 'game_id');
+                                s1.textContent = jsonData["" + (i * 4)];
+
+                                let s2  = document.createElement('span');
+                                s2.className = "plain_text small_text";
+                                s2.setAttribute('id', 'time');
+                                s2.textContent = jsonData["" + (i * 4 + 1)];
+
+                                let s3 = document.createElement('span');
+                                s3.className = "plain_text small_text";
+                                s3.setAttribute('id', 'number');
+                                s3.textContent = jsonData["" + (i * 4 + 2)] + "/" + jsonData["" + (i * 4 + 3)];
+
+                                el.appendChild(s1);
+                                el.appendChild(s2);
+                                el.appendChild(s3);
+
+                                parent.appendChild(el);
+                            }
+                            
+                        }
+                    }
+                    else
+                    {
+                        window.error.showModal();
+                        document.getElementById("error_text").innerText=jsonData.error;
+                    }
+                }
+            });
+        }
+
+        function dont_create() {
+            window.create_game_window.close();
+        }
+
+        function create_game() {
+            window.create_game_window.showModal();
+        }
+
+        $('#form_create').submit(function(e) {
+            e.preventDefault();
+            window.create_game_window.close();
+            let results = document.cookie.match(/login=(.+?)(;|$)/);
+            let login = results[1];
+
+            results = document.cookie.match(/token=(.+?)(;|$)/);
+            var tk = results[1];
+            
+            let number = document.getElementById("number_of_people").value;
+            let time = document.getElementById("time_on_move").value;
+            $.ajax({
+                method: "POST",
+                url: 'scripts/createroom.php',
+                data: 
+                {
+                    // login : login,
+                    token: tk,
+                    number : number,
+                    time : time
+                },
+                success: function(response) {
+                    // alert(response);
+                    let jsonData = JSON.parse(response);
+                    if (jsonData.success == "1")
+                    {
+                        location.href = 'waiting.html';
+                    }
+                    else
+                    {
+                        window.error.showModal();
+                        document.getElementById("error_text").innerText=jsonData.error;
+                    }
+                }
+            });
+        });
+
+        function roomenter(id) {
+            var results = document.cookie.match(/login=(.+?)(;|$)/);
+            let login = results[1];
+
+            results = document.cookie.match(/token=(.+?)(;|$)/);
+            var tk = results[1];
+        
+            $.ajax({
+                method: "POST",
+                url: 'scripts/entergame.php',
+                data: {
+                    token: tk,
+                    game: id,
+                    // login : login,
+                },
+                success: function(response) {
+                    // alert(response);
+                    let jsonData = JSON.parse(response);
+                    if (jsonData.success == "1") {
+                        // alert(jsonData.start);
+                        if (jsonData.start == "1") {
+                            location.href = 'field.html';
+                        }
+                        else {
+                            location.href = 'waiting.html';
+                        }
+                    }
+                    else {
+                        window.error.showModal();
+                        document.getElementById("error_text").innerText=jsonData.error;
+                    }
+                }
+            });
+        }
+        function return_to_room(id) {
+            // Значение для cookie
+            var g = id;
+
+            // Время жизни cookie в секундах (в данном случае, 2 часа)
+            var expirationTime = 7200;
+
+            // Путь, для которого будет доступно cookie (в данном случае, '/~s314947/db/game')
+            var path = '/~s314947/db/game';
+
+            // Создание строки для установки cookie
+            var cookieString = "roomId=" + encodeURIComponent(g) + "; expires=" + new Date(Date.now() + expirationTime * 1000).toUTCString() + "; path=" + path;
+
+            // Установка cookie
+            document.cookie = cookieString;
+
+            location.href = 'field.html';
+        }
+    </script>
+</body>
+</html>

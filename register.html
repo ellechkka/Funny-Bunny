@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/rabbit.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kablammo&family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <title>Funny Bunny: Registration</title>
+    <style>
+        body {
+            background-image: url(images/bg_for_login.svg);
+            background-position: bottom;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .b {
+            position: absolute;
+            bottom: 2vh;
+            left: 2vw; 
+        }
+        .reg_container {
+            padding-top: 10vh;
+            width: 260px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .reg_container > p {
+            text-align: center;
+        }
+        
+        input[type=text], input[type=password] {
+            width: 260px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 6px;
+            background-color: #C7D2C3;
+            /* background-color: #DBDFAD; */
+            box-sizing: border-box;
+            font-family: "Montserrat", sans-serif;
+            font-size: 14px;
+        }
+        input:focus, input:active, input::placeholder {
+            font-family: "Montserrat", sans-serif;
+            font-size: 14px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .input_conteiner {
+            margin-bottom: 5vh;
+        }
+        .button_container {
+            width: 260px;
+            display: flex;
+            justify-content: center;
+        }
+        dialog {
+            background-color: #CBF0FF;
+            border: none;
+            border-radius: 8px;
+        }
+        #form {
+            margin-bottom: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="reg_container plain_text small_text">
+        <h1 class="plain_text small_heading">Регистрация</h1>
+        <form id="form" name="signin-form">
+            <div class="input_conteiner">
+                <div>
+                    <label class="plain_text small_text">Логин</label><br>
+                    <input type="text" name="username" placeholder="Логин"/>
+                </div>
+                <div>
+                    <label class="plain_text small_text">Пароль</label><br>
+                    <input type="password" name="password" placeholder="Пароль"/>
+                </div>
+            </div>
+            <div class="button_container">
+                <button class="plain_text small_heading" type="submit" name="reg" value="reg">Зарегистрироваться</button>
+            </div>
+        </form> 
+        <p>Уже есть аккаунта?</p>
+        <div class="button_container">
+            <form action="login.html">
+                <button class="plain_text small_heading">Вход</button>
+            </form>
+        </div>
+    </div>
+    <form class="b" action="index.html">
+        <button class="plain_text small_heading">Назад</button>
+    </form>
+
+    <dialog id="error">
+        <div>
+            <p class="plain_text small_text" id="error_text"></p>
+            <button class="plain_text small_heading" onclick="window.error.close();">ОК</button>
+        </div>                
+    </dialog>
+
+    <script>
+        $(document).ready(function() {
+            $('#form').submit(function(e) {
+            e.preventDefault();
+                $.ajax({
+                    method: "POST",
+                    url: 'scripts/reg.php',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        let jsonData = JSON.parse(response);
+                        if (jsonData.success == "1")
+                        {
+                            location.href = 'games_list.html';
+                        }
+                        else
+                        {
+                            window.error.showModal();
+                            document.getElementById("error_text").innerText=jsonData.error;
+                        }
+                    }
+                });
+            });
+        });
+    </script> 
+</body>
+
+</html>
