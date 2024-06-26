@@ -1,0 +1,41 @@
+body {
+    background-color: #CBF0FF;
+    margin: 0;
+    box-sizing: border-box;
+    height: 100vh;
+    min-width: 1000px;
+}
+.heading {
+    font-family: "Kablammo", serif;
+}
+.plain_text {
+    font-family: "Montserrat", sans-serif;
+}
+.small_heading {
+    font-size: 18px;
+    font-weight: 400;
+}
+.small_text {
+    font-size: 14px;
+}
+.contain {
+    padding: 2vh 2vw;
+    box-sizing: border-box;
+    /* max-width: 1820px; */
+    max-width: 1180px;
+    max-height: 780px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+button {
+    padding: 1vh;
+    background-color: #EE92B7;
+    border-radius: 6px;
+    border-color: transparent;
+}
+button:hover {
+    cursor: pointer;
+    background-color: #e287ac;
+}
