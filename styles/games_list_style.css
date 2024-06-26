@@ -1,0 +1,117 @@
+body {
+    /* background-image: url(../images/hills.svg); */
+    background-image: url(../images/bg_for_list.svg);
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.contain {
+    height: 100vh; 
+    text-align: center;
+    display: flex;
+    flex-direction: column;  
+    padding-top: 20vh;          
+}
+div#a_games {
+    display: none;
+}
+.button_block {
+    margin: auto auto 5vh;
+    display: flex;
+    width: 50%;
+    max-width: 500px;
+    align-self: center;
+    justify-content: space-between;
+}
+.single_button{
+    margin: auto auto 5vh;
+    align-self: center;
+}
+.refresh_button {
+    margin: 2vh auto 2vh;
+    align-self: center;
+}
+
+.game {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 10px;
+    background-color: #DDC648;
+    border: none;
+    border-radius: 6px;
+    width: 400px;
+    box-sizing: border-box;
+    margin-bottom: 8px;
+}
+.game:hover {
+    cursor: pointer;
+}
+.titles {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+    margin-bottom: 8px;
+}
+.games_container {
+    width: 400px;
+    margin: 0 auto;
+}
+.game > div {
+    display: inline;
+}
+.list_of_games2 {
+    width: 410px;
+    max-height: 20vh;
+    overflow-y: auto;
+    box-sizing: content-box;
+}
+.list_of_games {
+    width: 410px;
+    max-height: 20vh;
+    overflow-y: auto;
+    box-sizing: content-box;
+}
+#create_game_window {
+    padding: 30px;
+    background-color: #F5E27A;
+    width: 40vw;
+    border: none;
+}
+#create_game_window button {
+    margin-top: 32px;
+}
+dialog {
+    background-color: #CBF0FF;
+    border: none;
+    border-radius: 8px;
+}
+input[type=number] {
+    width: 120px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 6px;
+    background-color: #C7D2C3;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+}
+input:focus, input:active, input::placeholder {
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+}
+
+::-webkit-scrollbar {
+    margin-left: 4px;
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: none; 
+}
+::-webkit-scrollbar-thumb {
+    background: #628966; 
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #516b54; 
+}

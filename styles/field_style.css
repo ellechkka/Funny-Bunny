@@ -1,0 +1,127 @@
+.rabbits svg {
+    display: none;
+}
+dialog {
+    background-color: #F5E27A;
+    border: none;
+    border-radius: 8px;
+}
+.contain {
+    height: 100vh;
+    padding: 2vh 2vw;
+    /* max-width: 1920px; */
+    max-width: 1180px;
+    
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    text-align: center;
+
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.top_row,
+.bottom_row {
+    flex: 0 1 auto;
+    display: flex;
+    justify-content: space-between;
+}
+.field_container {
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.card {
+    display: inline;
+}
+
+.card img {
+    width: 100px;
+}
+
+.rabbit_line {
+    display: flex;
+    justify-items: right;
+}
+
+.rabbit_block {
+    display: inline;
+    text-align: center;
+}
+
+.players_rabbits {
+    display: inline-block;
+    margin-left: 50px;
+}
+
+.button_block {
+    display: flex;
+    width: 44%;
+    align-self: center;
+    align-self: flex-end;
+    justify-content: space-between;
+}
+.rabbit_hover {
+    transition: 1s;
+}
+.rabbit_hover:hover {
+    cursor: pointer;
+    /* transform: scale(1.1); */
+
+    /* filter: blur(2px); */
+    filter: brightness(1.2);
+    
+    /* outline: 2px dashed #3d1f15; 
+    outline-offset: -10px; */
+}
+
+.users_rabbits {
+    display: inline;
+}
+
+.hole {
+    fill: #DBDFAD;
+}
+
+#rabbit_group {
+    visibility: hidden;
+}
+
+.rules_page {
+    background-color: #F5E27A;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    box-sizing: border-box;
+    height: 100%; 
+    width: 100%;
+}
+.rules_container {
+    overflow: hidden;
+    padding-right: 2vw;
+}
+.rules_heading {
+    display: inline;
+    font-size: 60px;
+    margin-top: 0;
+    margin-bottom: 32px;
+}
+.rules {
+    margin-left: calc(12.5% + 24px);
+    margin-right: 24px;
+    max-width: 1020px;
+}
+.pair {
+    margin-bottom: 20px;
+}
+.b {
+    position: absolute;
+    bottom: 2vh;
+    left: 2vw; 
+}
